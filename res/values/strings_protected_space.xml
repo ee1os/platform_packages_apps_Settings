@@ -27,6 +27,8 @@
     <string name="protected_space_password_too_short">Must be at least 4 characters</string>
     <string name="protected_space_mismatch">Doesn\'t match, try again</string>
     <string name="protected_space_pin_length">Use <xliff:g id="digits">%1$d</xliff:g> digits, as many as your PIN</string>
+    <!-- first PIN screen of the setup wizard, before the protected space is offered -->
+    <string name="setup_pin_length_note">With a protected space, every PIN on this phone has as many digits as this one. The length can\'t be changed later.</string>
     <!-- shown on PIN screens once a protected space exists -->
     <string name="layout_pin_length">Use <xliff:g id="digits">%1$d</xliff:g> digits, like the other PINs on this phone</string>
     <string name="protected_space_taken">Choose a different PIN</string>

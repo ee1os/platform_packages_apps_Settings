@@ -188,6 +188,12 @@ public class SetupChooseLockPassword extends ChooseLockPassword {
         protected void updateUi() {
             super.updateUi();
 
+            // the protected space is offered after this screen and fixes the length chosen here
+            if (mUiStage == Stage.Introduction && !mIsAlphaMode) {
+                mMessage.setVisibility(View.VISIBLE);
+                mMessage.setText(R.string.setup_pin_length_note);
+            }
+
             // Show the skip button during SUW but not during Settings > Biometric Enrollment
             if (mUiStage == Stage.Introduction) {
                 mSkipOrClearButton.setText(getActivity(), R.string.skip_label);

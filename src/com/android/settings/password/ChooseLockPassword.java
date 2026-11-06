@@ -297,7 +297,7 @@ public class ChooseLockPassword extends SettingsActivity {
         protected boolean mIsAlphaMode;
         protected FooterButton mSkipOrClearButton;
         private FooterButton mNextButton;
-        private TextView mMessage;
+        protected TextView mMessage;
         protected CheckBox mAutoPinConfirmOption;
         protected TextView mAutoConfirmSecurityMessage;
         protected boolean mIsAutoPinConfirmOptionSetManually;
