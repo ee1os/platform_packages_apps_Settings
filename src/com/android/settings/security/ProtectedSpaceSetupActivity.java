@@ -486,6 +486,7 @@ public class ProtectedSpaceSetupActivity extends Activity {
             Exception error = null;
             try {
                 lpu.provisionProtectedSpace(owner, protectedPin, duress, duressPassword, reboot);
+                enableAutoConfirm(lpu);
             } catch (Exception e) {
                 Log.e(TAG, "provisionProtectedSpace failed", e);
                 error = e;
@@ -495,6 +496,21 @@ public class ProtectedSpaceSetupActivity extends Activity {
             final Exception result = error;
             runOnUiThread(() -> onProvisioned(result));
         });
+    }
+
+    // Every PIN has A's length now, so the pad can submit any of them at that length. The space
+    // is already set up, so a failure here only leaves the pad with its OK key. A can turn it off
+    // in Screen lock.
+    private static void enableAutoConfirm(LockPatternUtils lpu) {
+        try {
+            lpu.setAutoPinConfirm(true, UserHandle.USER_SYSTEM);
+            if (!lpu.refreshStoredPinLength(UserHandle.USER_SYSTEM)) {
+                Log.w(TAG, "couldn't store the PIN length, leaving auto-confirm off");
+                lpu.setAutoPinConfirm(false, UserHandle.USER_SYSTEM);
+            }
+        } catch (RuntimeException e) {
+            Log.w(TAG, "couldn't turn on auto-confirm", e);
+        }
     }
 
     private static LockscreenCredential randomPassword() {
