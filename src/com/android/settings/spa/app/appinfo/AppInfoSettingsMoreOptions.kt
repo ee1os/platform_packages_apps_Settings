@@ -35,6 +35,7 @@ import androidx.compose.ui.res.stringResource
 import com.android.settings.R
 import com.android.settings.Utils
 import com.android.settings.applications.appinfo.AppInfoDashboardFragment
+import com.android.settings.ext.ExtSettingControllerHelper
 import com.android.settingslib.spa.widget.scaffold.MoreOptionsAction
 import com.android.settingslib.spaprivileged.framework.common.appOpsManager
 import com.android.settingslib.spaprivileged.framework.common.devicePolicyManager
@@ -139,10 +140,12 @@ private suspend fun ApplicationInfo.getMoreOptionsState(
         isShowUninstallUpdates(context)
     }
     val shownUninstallForAllUsersDeferred = async {
-        isShowUninstallForAllUsers(
-            userManager = context.userManager,
-            packageManagers = packageManagers,
-        )
+        // user 0 of a device with a protected space: the item would tell of the other user
+        !ExtSettingControllerHelper.isProtectedSpaceHidden(context) &&
+            isShowUninstallForAllUsers(
+                userManager = context.userManager,
+                packageManagers = packageManagers,
+            )
     }
     val shouldShowAccessRestrictedSettingsDeferred = async {
         shouldShowAccessRestrictedSettings(context)

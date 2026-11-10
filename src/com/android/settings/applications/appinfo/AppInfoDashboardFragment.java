@@ -63,6 +63,7 @@ import com.android.settings.applications.specialaccess.interactacrossprofiles.In
 import com.android.settings.applications.specialaccess.pictureinpicture.PictureInPictureDetailPreferenceController;
 import com.android.settings.core.SubSettingLauncher;
 import com.android.settings.dashboard.DashboardFragment;
+import com.android.settings.ext.ExtSettingControllerHelper;
 import com.android.settings.utils.HsuUtils;
 import com.android.settingslib.RestrictedLockUtilsInternal;
 import com.android.settingslib.applications.AppUtils;
@@ -603,6 +604,9 @@ public class AppInfoDashboardFragment extends DashboardFragment
         } else if (mPackageInfo == null || mDpm.packageHasActiveAdmins(mPackageInfo.packageName)) {
             showIt = false;
         } else if (!mUserManager.isAdminUser()) {
+            showIt = false;
+        } else if (ExtSettingControllerHelper.isProtectedSpaceHidden(getContext())) {
+            // user 0 of a device with a protected space: the item would tell of the other user
             showIt = false;
         } else if (mUserManager.getUsers().size() < 2) {
             showIt = false;
