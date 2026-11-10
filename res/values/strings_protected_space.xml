@@ -36,6 +36,8 @@
     <string name="layout_pin_taken">This PIN is already used on this phone. Your PIN wasn\'t changed.</string>
     <!-- a duress or reboot PIN equal to another space's screen lock PIN -->
     <string name="layout_alternate_taken">It is the same as another PIN on this phone.</string>
+    <!-- summary of the duress or reboot entry after the main space's PIN was changed to it -->
+    <string name="layout_alternate_unreachable">Not working: the main space uses the same PIN. Choose another.</string>
     <string name="layout_pin_try_later">Too many wrong PINs were entered. Try again later. Your PIN wasn\'t changed.</string>
     <string name="protected_space_wrong_owner">Wrong PIN</string>
     <string name="protected_space_failed">Couldn\'t set up the protected space: <xliff:g id="reason">%1$s</xliff:g></string>

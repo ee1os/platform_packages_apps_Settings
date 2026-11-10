@@ -12,6 +12,7 @@ import android.os.UserHandle;
 import android.provider.Settings;
 
 import com.android.internal.widget.LockPatternUtils;
+import com.android.settings.R;
 
 import java.util.function.Consumer;
 
@@ -35,6 +36,21 @@ public class ExtSettingControllerHelper<T extends Setting> {
     /** The duress and reboot credentials are managed by one user, user 0 by default. */
     public static int getAlternatesSettingAvailability(Context ctx) {
         return new LockPatternUtils(ctx).isAlternatesAuthority() ? AVAILABLE : DISABLED_FOR_USER;
+    }
+
+    /**
+     * Summary of the duress or reboot entry ({@code LockPatternUtils.ALTERNATE_*}): a warning
+     * while the main space's PIN is the same, so the lock screen never reaches it; else empty.
+     */
+    public static CharSequence getAlternateSummary(Context ctx, int alternate) {
+        try {
+            if ((new LockPatternUtils(ctx).getUnreachableAlternates() & alternate) != 0) {
+                return ctx.getText(R.string.layout_alternate_unreachable);
+            }
+        } catch (RuntimeException e) {
+            // no warning then
+        }
+        return "";
     }
 
     /**

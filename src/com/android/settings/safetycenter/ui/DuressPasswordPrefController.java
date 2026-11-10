@@ -6,6 +6,7 @@ import android.text.TextUtils;
 
 import androidx.preference.Preference;
 
+import com.android.internal.widget.LockPatternUtils;
 import com.android.settings.core.BasePreferenceController;
 import com.android.settings.ext.ExtSettingControllerHelper;
 import com.android.settings.security.DuressPasswordMainActivity;
@@ -19,6 +20,12 @@ public class DuressPasswordPrefController extends BasePreferenceController {
     @Override
     public int getAvailabilityStatus() {
         return ExtSettingControllerHelper.getAlternatesSettingAvailability(mContext);
+    }
+
+    @Override
+    public CharSequence getSummary() {
+        return ExtSettingControllerHelper.getAlternateSummary(mContext,
+                LockPatternUtils.ALTERNATE_DURESS);
     }
 
     @Override
