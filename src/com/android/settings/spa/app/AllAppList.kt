@@ -21,9 +21,11 @@ import android.content.pm.ApplicationInfo
 import android.os.Bundle
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.State
+import androidx.compose.runtime.remember
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import com.android.settings.R
+import com.android.settings.ext.ExtSettingControllerHelper
 import com.android.settings.flags.Flags
 import com.android.settings.spa.app.appinfo.AppInfoSettingsProvider
 import com.android.settings.utils.HsuUtils
@@ -74,11 +76,15 @@ fun AllAppListPage(
     appList: @Composable AppListInput<AppRecordWithSize>.() -> Unit = { AppList() },
 ) {
     val resetAppDialogPresenter = rememberResetAppDialogPresenter()
+    // user 0 of a device with a protected space doesn't list the apps of other users
+    val context = LocalContext.current
+    val otherUsersHidden = remember { ExtSettingControllerHelper.isProtectedSpaceHidden(context) }
     AppListPage(
         title = stringResource(R.string.all_apps),
         listModel = rememberContext(::AllAppListModel),
         showInstantApps = true,
-        matchAnyUserForAdmin = (!android.multiuser.Flags.dontShowOtherUsersAppsToAdmin()),
+        matchAnyUserForAdmin =
+            !android.multiuser.Flags.dontShowOtherUsersAppsToAdmin() && !otherUsersHidden,
         moreOptions = { ResetAppPreferences(resetAppDialogPresenter::open) },
         appList = appList,
     )
